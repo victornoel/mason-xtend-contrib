@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>fr.irit.smac.lib.contrib</groupId>
 	<artifactId>mason-xtend-contrib</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>MASON Xtend Extensions</name>
 	<description>Extensions for MASON with Xtend</description>
 
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>fr.irit.smac.lib.contrib</groupId>
 			<artifactId>xtend-contrib</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
