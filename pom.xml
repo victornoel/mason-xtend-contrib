@@ -1,19 +1,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
-		<groupId>fr.irit.smac.lib</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.0.3</version>
+		<groupId>fr.irit.smac</groupId>
+		<artifactId>parent-central</artifactId>
+		<version>0.0.2</version>
+		<relativePath></relativePath>
 	</parent>
+
 	<groupId>fr.irit.smac.lib.contrib</groupId>
 	<artifactId>mason-xtend-contrib</artifactId>
-	<version>1.0.2</version>
+	<version>1.1.0-SNAPSHOT</version>
+
 	<name>MASON Xtend Extensions</name>
+	<url>http://www.irit.fr/~Victor.Noel/</url>
 	<description>Extensions for MASON with Xtend</description>
 
+	<scm>
+		<connection>scm:hg:https://anon:anon@wwwsecu.irit.fr/hg/SMAC/victor-noel-phd/contrib-dev</connection>
+		<developerConnection>scm:hg:https://wwwsecu.irit.fr/hg/SMAC/victor-noel-phd/contrib-dev</developerConnection>
+		<url>https://anon:anon@wwwsecu.irit.fr/hg/SMAC/victor-noel-phd/contrib-dev</url>
+	</scm>
+
 	<properties>
-		<xtend-version>2.5.4</xtend-version>
+		<xtend-version>2.7.2</xtend-version>
 		<mason-version>17</mason-version>
 	</properties>
 
@@ -31,24 +42,39 @@
 		<dependency>
 			<groupId>fr.irit.smac.lib.contrib</groupId>
 			<artifactId>xtend-contrib</artifactId>
-			<version>1.0.2</version>
+			<version>1.1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- Clean the src-gen folders of the ui project. The Xtext generator 
+				will create files in those directories during generation. The ui project 
+				will *not* clean those directories later. It is done during generate-sources 
+				in order for the file not to be removed on clean but only prior to code generation 
+				from xtend-maven-plugin and exec-maven-plugin. They are not cleaned at clean 
+				because we want them to be versionned. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<!-- We don't want to do the normal clean at generate-sources obviously -->
+							<excludeDefaultDirectories>true</excludeDefaultDirectories>
+							<filesets>
+								<fileset>
+									<directory>src/main/xtend-gen</directory>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
@@ -65,28 +91,6 @@
 				<configuration>
 					<outputDirectory>src/main/xtend-gen</outputDirectory>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
-				<executions>
-					<execution>
-						<!-- hack in order for the file not to be removed on clean but only 
-							prior to code generation from xtend-maven-plugin -->
-						<phase>initialize</phase>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-						<configuration>
-							<filesets>
-								<fileset>
-									<directory>src/main/xtend-gen</directory>
-								</fileset>
-							</filesets>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>
