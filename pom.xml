@@ -25,7 +25,7 @@
 
 	<properties>
 		<xtend-version>2.7.2</xtend-version>
-		<mason-version>17</mason-version>
+		<mason-version>18</mason-version>
 	</properties>
 
 	<dependencies>
@@ -35,7 +35,7 @@
 			<version>${xtend-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>edu.gmu.cs</groupId>
+			<groupId>fr.irit.smac.thirdparty.edu.gmu.cs</groupId>
 			<artifactId>mason</artifactId>
 			<version>${mason-version}</version>
 		</dependency>
